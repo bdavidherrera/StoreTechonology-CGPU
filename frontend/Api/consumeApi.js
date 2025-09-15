@@ -118,6 +118,90 @@ export const eliminarUsuarios = async (idusuarios) => {
         console.error("Error al eliminar el usuario:", error);
     }
 }
+//Proveedores CRUD
+
+export const obtainProveedores = async () => {
+    try {
+        const resultado = await fetch(urlProveedor);
+        const proveedores = await resultado.json();
+        return proveedores;
+    } catch (error) {
+        console.error("Error al obtener los proveedores:", error);
+        throw error;
+    }
+}
+
+export const registrarProveedor = async (datosProveedor) => {
+    try {
+        const response = await fetch(`${urlProveedor}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(datosProveedor)
+        });
+        
+        const resultado = await response.json();
+        return resultado;
+        
+    } catch (error) {
+        console.error("Error al registrar proveedor:", error);
+        throw error;
+    }
+}
+
+export const actualizarProveedor = async (datosProveedor) => {
+    try {
+        const response = await fetch(`${urlActualizarProveedor}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(datosProveedor)
+        });
+
+        const resultado = await response.json();
+
+        if (response.ok) {
+            // Refrescar la página después de 1 segundo
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } else {
+            console.error("❌ Error en la actualización:", resultado);
+        }
+
+        return resultado;
+
+    } catch (error) {
+        console.error("Error al actualizar el proveedor:", error);
+        throw error;
+    }
+}
+
+export const eliminarProveedor = async (idProveedor) => {
+    try {
+        const response = await fetch(`${urlProveedor}/${idProveedor}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }   
+        });
+        const resultado = await response.json();
+        
+        if (response.ok) {
+            // Refrescar la página después de mostrar el mensaje
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        }
+        
+        return resultado;
+    } catch (error) {
+        console.error("Error al eliminar el proveedor:", error);
+        throw error;
+    }
+}
 
 //Productos Tecnologicos CRUD
 
